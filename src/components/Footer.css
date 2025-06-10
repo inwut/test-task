@@ -1,0 +1,16 @@
+footer {
+    width: 100%;
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer p {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+footer p span {
+    font-weight: 700;
+}

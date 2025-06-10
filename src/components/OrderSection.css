@@ -1,0 +1,41 @@
+#order-section {
+    padding: 32px 32px 40px 32px;
+    max-width: 420px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #F7F7F9;
+}
+
+#order-info {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#order-description, #product-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#product-category {
+    font-size: 12px;
+    font-weight: 400;
+    color: #797E8B;
+}
+
+#product-price {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+}
+
+#order-section hr {
+    border: 1px solid #E0E2EA;
+}

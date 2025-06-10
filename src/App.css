@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+#root {
+    padding: 16px 16px 40px 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px 32px;
+    flex-grow: 1;
+}
+
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: none;
+}
+
+.text-primary {
+    color: #363A43;
+}
+
+.text-secondary {
+    color: #666C7B;
+}
+
+
+#language-switch {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+#language-switch button, #back-button {
+    padding: 8px;
+}
+
+#back-button {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+@media (min-width: 1000px) {
+    main {
+        padding-top: 56px;
+        flex-direction: row;
+        align-items: start;
+        justify-content: center;
+    }
+
+    #language-switch {
+        right: calc((100% - 872px) / 2)
+    }
+
+    #back-button {
+        left: calc((100% - 872px) / 2)
+    }
+}
