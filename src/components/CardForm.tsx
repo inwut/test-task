@@ -31,7 +31,7 @@ function CardForm() {
       expirationDate: "",
       cvc: "",
     },
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
   const cardNumberMask = {
@@ -71,15 +71,16 @@ function CardForm() {
     const currentYear = new Date().getFullYear() % 100;
     const currentMonth = new Date().getMonth() + 1;
 
-    if (year < currentYear || (year === currentYear && month < currentMonth))
+    if (year < currentYear || (year === currentYear && month < currentMonth)) {
       return t("card_expired");
+    }
 
     return true;
   };
 
   const validateCardNumber: ValidateFunction = (value) => {
     const cleanedValue = unformat(value, cardNumberMask);
-    return cleanedValue.length === 16 || t("card_length");
+    return cleanedValue.length === 16 || t("card_number_length");
   };
 
   const validateCVC: ValidateFunction = (value) => {
@@ -166,8 +167,6 @@ function CardForm() {
       </div>
 
       <PayButton
-        amount={299.99}
-        currency="UAH"
         isProcessing={isProcessing}
         disabled={!isValid || isProcessing}
       />

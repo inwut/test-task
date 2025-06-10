@@ -1,23 +1,16 @@
 import infoIcon from "../assets/infoIcon.svg";
 import { Tooltip } from "@mui/material";
-import type { ChangeEvent, FocusEvent, Ref } from "react";
+import type { InputHTMLAttributes, Ref } from "react";
 import { InputMask, type Replacement } from "@react-input/mask";
 import { useTranslation } from "react-i18next";
 
-type InputFieldProps = {
-  type: string;
-  name: string;
+type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  placeholder: string;
-  autoComplete?: string;
   withIcon?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: FocusEvent<HTMLInputElement>) => void;
-  value: string;
   error?: string;
   mask: string;
   replacement: Replacement;
-  ref: Ref<HTMLInputElement>;
+  ref?: Ref<HTMLInputElement>;
 };
 
 function InputField({

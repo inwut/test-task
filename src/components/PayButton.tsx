@@ -4,18 +4,11 @@ import "./PayButton.css";
 import { useTranslation } from "react-i18next";
 
 type PayButtonProps = {
-  amount: number;
-  currency: string;
   isProcessing: boolean;
   disabled: boolean;
 };
 
-function PayButton({
-  amount,
-  currency,
-  isProcessing,
-  disabled,
-}: PayButtonProps) {
+function PayButton({ isProcessing, disabled }: PayButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
   const { t } = useTranslation();
 
@@ -38,7 +31,7 @@ function PayButton({
       onTouchEnd={handleMouseUp}
     >
       <span id="pay-text" className={`${isProcessing ? "hidden" : ""}`}>
-        {t("pay")} {amount} {currency}
+        {t("pay")} 299.99 UAH
       </span>
       <span id="processing-text" className={`${isProcessing ? "visible" : ""}`}>
         <img src={loader} id="spinner" alt={t("loader_alt")}></img>

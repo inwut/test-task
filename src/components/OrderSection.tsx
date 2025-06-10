@@ -5,17 +5,9 @@ type OrderSectionProps = {
   orderInfo: string;
   description: string;
   product: { name: string; category: string };
-  price: number;
-  currency: string;
 };
 
-function OrderSection({
-  orderInfo,
-  description,
-  product,
-  price,
-  currency,
-}: OrderSectionProps) {
+function OrderSection({ orderInfo, description, product }: OrderSectionProps) {
   const { t } = useTranslation();
 
   const truncatedOrderInfo =
@@ -42,7 +34,7 @@ function OrderSection({
         <p id="product-category">{product.category}</p>
         <hr />
         <p id="product-price" className="text-primary">
-          {t("total")} {price} {currency}
+          {t("total")} 299.99 UAH
         </p>
       </div>
     </section>

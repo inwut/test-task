@@ -8,13 +8,13 @@
 }
 
 #root {
-    padding: 16px 16px 40px 16px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 main {
+    padding: 16px 16px 0 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,7 +59,7 @@ button {
 
 @media (min-width: 1000px) {
     main {
-        padding-top: 56px;
+        padding-top: 64px;
         flex-direction: row;
         align-items: start;
         justify-content: center;
@@ -70,6 +70,6 @@ button {
     }
 
     #back-button {
-        left: calc((100% - 872px) / 2)
+        left: calc((100% - 872px) / 2);
     }
 }

@@ -9,6 +9,16 @@ import { useTranslation } from "react-i18next";
 
 function App() {
   const { t } = useTranslation();
+  const test_data = {
+    price: 299.99,
+    orderInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    description:
+      "Suspendisse mollis, lorem a interdum aliquam, mi leo molestie nibh, id euismod neque elit nec risus. Nunc finibus, eros nec faucibus blandit, est quam dapibus mi, in iaculis purus quam sit amet felis.",
+    product: {
+      name: "Lamel Professional Smart Skin Compact Powder",
+      category: "Пудра для лица",
+    },
+  };
 
   return (
     <>
@@ -19,14 +29,9 @@ function App() {
       <main>
         <PaymentSection />
         <OrderSection
-          orderInfo="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          description="Suspendisse mollis, lorem a interdum aliquam, mi leo molestie nibh, id euismod neque elit nec risus. Nunc finibus, eros nec faucibus blandit, est quam dapibus mi, in iaculis purus quam sit amet felis. Donec lacinia lacus lectus, in semper eros consequat eget. Phasellus ornare eleifend faucibus. Vestibulum elit dolor, pretium quis mauris nec, tempor vestibulum libero. Vivamus elementum quam at mattis consectetur. Aenean consequat id arcu efficitur viverra. Cras at est leo."
-          product={{
-            name: "Lamel Professional Smart Skin Compact Powder",
-            category: "Пудра для лица",
-          }}
-          price={299.99}
-          currency="UAH"
+          orderInfo={test_data.orderInfo}
+          description={test_data.description}
+          product={test_data.product}
         />
       </main>
       <Footer />
