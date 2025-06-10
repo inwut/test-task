@@ -37,6 +37,9 @@ button {
     color: #666C7B;
 }
 
+.language-button {
+    color: #B0B4BE;
+}
 
 #language-switch {
     position: absolute;

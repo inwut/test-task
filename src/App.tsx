@@ -1,18 +1,20 @@
 import "./App.css";
+import LanguageSwitch from "./components/LanguageSwitch";
 import PaymentSection from "./components/PaymentSection";
 import OrderSection from "./components/OrderSection";
 import Footer from "./components/Footer";
 import Arrow from "./assets/arrow.svg";
+import "./i18n/i18n.js";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <>
-      <div id="language-switch">
-        <button className="text-primary">Eng</button>
-        <button className="text-primary">Укр</button>
-      </div>
+      <LanguageSwitch />
       <button id="back-button">
-        <img src={Arrow} alt="Back" />
+        <img src={Arrow} alt={t("back_alt")} />
       </button>
       <main>
         <PaymentSection />

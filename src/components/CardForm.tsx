@@ -4,7 +4,8 @@ import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { unformat } from "@react-input/mask";
 import "./CardForm.css";
 import { toast, ToastContainer } from "react-toastify";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type CardFormInputs = {
   cardNumber: string;
@@ -16,6 +17,9 @@ type ValidateFunction = (value: string) => string | boolean;
 
 function CardForm() {
   const [isProcessing, setIsProcessing] = useState(false);
+  const expirationRef = useRef<HTMLInputElement>(null);
+  const cvcRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -35,8 +39,8 @@ function CardForm() {
     replacement: { _: /\d/ },
   };
   const expirationDateMask = {
-    mask: "m_/__",
-    replacement: { m: /[01]/, _: /\d/ },
+    mask: "__/__",
+    replacement: { _: /\d/ },
   };
   const cvcMask = {
     mask: "___",
@@ -50,14 +54,14 @@ function CardForm() {
     const cvc = unformat(data.cvc, cvcMask);
     console.log(cardNumber, expirationDate, cvc);
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    toast.success("Payment successful!");
+    toast.success(t("payment_successful"));
     setIsProcessing(false);
   };
 
   const validateExpirationDate: ValidateFunction = (value) => {
     const dateRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
     if (!dateRegex.test(value)) {
-      return "Invalid date format (ММ/РР)";
+      return t("invalid_date");
     }
 
     const [monthStr, yearStr] = value.split("/");
@@ -68,19 +72,19 @@ function CardForm() {
     const currentMonth = new Date().getMonth() + 1;
 
     if (year < currentYear || (year === currentYear && month < currentMonth))
-      return "The card has expired";
+      return t("card_expired");
 
     return true;
   };
 
   const validateCardNumber: ValidateFunction = (value) => {
     const cleanedValue = unformat(value, cardNumberMask);
-    return cleanedValue.length === 16 || "Card number must contain 16 digits";
+    return cleanedValue.length === 16 || t("card_length");
   };
 
   const validateCVC: ValidateFunction = (value) => {
     const cleanedValue = unformat(value, cvcMask);
-    return cleanedValue.length === 3 || "CVC must contain 3 digits";
+    return cleanedValue.length === 3 || t("cvc_length");
   };
 
   return (
@@ -90,18 +94,25 @@ function CardForm() {
           control={control}
           name="cardNumber"
           rules={{
-            required: "Card number is required",
+            required: t("card_number_required"),
             validate: validateCardNumber,
           }}
           render={({ field }) => (
             <InputField
               {...field}
               type="text"
-              label="Card Number"
+              label={t("card_number")}
               placeholder="1234 1234 1234 1234"
               autoComplete="cc-number"
               error={errors.cardNumber?.message}
               {...cardNumberMask}
+              onChange={(e) => {
+                field.onChange(e);
+                const raw = unformat(e.target.value, cardNumberMask);
+                if (raw.length === 16) {
+                  expirationRef.current?.focus();
+                }
+              }}
             />
           )}
         />
@@ -109,18 +120,26 @@ function CardForm() {
           control={control}
           name="expirationDate"
           rules={{
-            required: "Expiration date is required",
+            required: t("expiration_date_required"),
             validate: validateExpirationDate,
           }}
           render={({ field }) => (
             <InputField
               {...field}
               type="text"
-              label="Expiration Date"
-              placeholder="MM/YY"
+              ref={expirationRef}
+              label={t("expiration_date")}
+              placeholder={t("date_placeholder")}
               autoComplete="cc-exp"
               error={errors.expirationDate?.message}
               {...expirationDateMask}
+              onChange={(e) => {
+                field.onChange(e);
+                const value = e.target.value;
+                if (value.length === 5) {
+                  cvcRef.current?.focus();
+                }
+              }}
             />
           )}
         />
@@ -128,13 +147,14 @@ function CardForm() {
           control={control}
           name="cvc"
           rules={{
-            required: "CVC is required",
+            required: t("cvc_required"),
             validate: validateCVC,
           }}
           render={({ field }) => (
             <InputField
               {...field}
               type="text"
+              ref={cvcRef}
               label="CVC"
               placeholder="•••"
               withIcon

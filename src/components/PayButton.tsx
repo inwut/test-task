@@ -1,6 +1,7 @@
 import { useState } from "react";
 import loader from "../assets/loader.svg";
 import "./PayButton.css";
+import { useTranslation } from "react-i18next";
 
 type PayButtonProps = {
   amount: number;
@@ -16,6 +17,7 @@ function PayButton({
   disabled,
 }: PayButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
+  const { t } = useTranslation();
 
   const handleMouseDown = () => setIsPressed(true);
   const handleMouseUp = () => {
@@ -36,11 +38,11 @@ function PayButton({
       onTouchEnd={handleMouseUp}
     >
       <span id="pay-text" className={`${isProcessing ? "hidden" : ""}`}>
-        Pay {amount} {currency}
+        {t("pay")} {amount} {currency}
       </span>
       <span id="processing-text" className={`${isProcessing ? "visible" : ""}`}>
-        <img src={loader} id="spinner" alt="loader"></img>
-        Processing payment
+        <img src={loader} id="spinner" alt={t("loader_alt")}></img>
+        {t("processing")}
       </span>
     </button>
   );

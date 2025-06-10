@@ -1,4 +1,5 @@
 import "./OrderSection.css";
+import { useTranslation } from "react-i18next";
 
 type OrderSectionProps = {
   orderInfo: string;
@@ -15,6 +16,8 @@ function OrderSection({
   price,
   currency,
 }: OrderSectionProps) {
+  const { t } = useTranslation();
+
   const truncatedOrderInfo =
     orderInfo.length > 100 ? orderInfo.substring(0, 100) + "..." : orderInfo;
 
@@ -39,7 +42,7 @@ function OrderSection({
         <p id="product-category">{product.category}</p>
         <hr />
         <p id="product-price" className="text-primary">
-          Total {price} {currency}
+          {t("total")} {price} {currency}
         </p>
       </div>
     </section>
