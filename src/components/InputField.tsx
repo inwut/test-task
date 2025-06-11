@@ -1,12 +1,12 @@
-import infoIcon from "../assets/infoIcon.svg";
-import { Tooltip } from "@mui/material";
 import type { InputHTMLAttributes, Ref } from "react";
 import { InputMask, type Replacement } from "@react-input/mask";
+import { Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import infoIcon from "../assets/infoIcon.svg";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  withIcon?: boolean;
+  tooltip?: string;
   error?: string;
   mask: string;
   replacement: Replacement;
@@ -16,7 +16,7 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 function InputField({
   label,
   name,
-  withIcon,
+  tooltip,
   error,
   ...props
 }: InputFieldProps) {
@@ -29,9 +29,13 @@ function InputField({
       </label>
       <div className="input-wrapper">
         <InputMask id={name} {...props} />
-        {withIcon && (
-          <Tooltip title={t("cvc_info")} placement="top" arrow>
-            <img className="input-tooltip" src={infoIcon} alt={t("cvc_alt")} />
+        {tooltip && (
+          <Tooltip title={tooltip} placement="top" arrow>
+            <img
+              className="input-tooltip"
+              src={infoIcon}
+              alt={t("tooltip_alt")}
+            />
           </Tooltip>
         )}
       </div>

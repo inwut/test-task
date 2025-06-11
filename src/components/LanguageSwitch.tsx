@@ -5,13 +5,13 @@ function LanguageSwitch() {
   return (
     <div id="language-switch">
       <button
-        className={`${i18n.language === "en" ? "text-primary" : "language-button"}`}
+        className={`${i18n.language === "en" ? "active-button" : "text-primary"}`}
         onClick={() => i18n.changeLanguage("en")}
       >
         Eng
       </button>
       <button
-        className={`text-primary ${i18n.language === "uk" ? "text-primary" : "language-button"}`}
+        className={`${i18n.language === "uk" ? "active-button" : "text-primary"}`}
         onClick={() => i18n.changeLanguage("uk")}
       >
         Укр

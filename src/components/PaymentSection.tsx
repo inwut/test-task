@@ -1,7 +1,7 @@
+import { Trans, useTranslation } from "react-i18next";
 import CardForm from "./CardForm.tsx";
 import applePayLogo from "../assets/applePayLogo.svg";
 import "./PaymentSection.css";
-import { useTranslation } from "react-i18next";
 
 function PaymentSection() {
   const { t } = useTranslation();
@@ -24,9 +24,16 @@ function PaymentSection() {
       </div>
       <CardForm />
       <p id="payment-info" className="text-secondary">
-        {t("payment_info_first")} <span>{t("plan_pro")}</span>{" "}
-        {t("payment_info_second")} <span>{t("automatically_renewed")}</span>{" "}
-        {t("payment_info_third")}
+        <Trans
+          i18nKey="payment_info"
+          values={{
+            plan: t("plan_pro"),
+            auto: t("automatically_renewed"),
+          }}
+          components={{
+            bold: <span />,
+          }}
+        />
       </p>
     </section>
   );

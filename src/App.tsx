@@ -10,13 +10,13 @@ import { useTranslation } from "react-i18next";
 function App() {
   const { t } = useTranslation();
   const test_data = {
-    price: 299.99,
-    orderInfo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    orderInfo:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quis nunc rutrum enim interdum malesuada.",
     description:
-      "Suspendisse mollis, lorem a interdum aliquam, mi leo molestie nibh, id euismod neque elit nec risus. Nunc finibus, eros nec faucibus blandit, est quam dapibus mi, in iaculis purus quam sit amet felis.",
+      "Suspendisse mollis, lorem a interdum aliquam, mi leo molestie nibh, id euismod neque elit nec risus. Nunc finibus, eros nec faucibus blandit, est quam dapibus mi, in iaculis purus quam sit amet felis. Vestibulum gravida consectetur tellus semper pretium. ",
     product: {
       name: "Lamel Professional Smart Skin Compact Powder",
-      category: "Пудра для лица",
+      category: "Пудра для обличчя",
     },
   };
 

@@ -1,5 +1,5 @@
-import "./OrderSection.css";
 import { useTranslation } from "react-i18next";
+import "./OrderSection.css";
 
 type OrderSectionProps = {
   orderInfo: string;
@@ -10,30 +10,26 @@ type OrderSectionProps = {
 function OrderSection({ orderInfo, description, product }: OrderSectionProps) {
   const { t } = useTranslation();
 
-  const truncatedOrderInfo =
-    orderInfo.length > 100 ? orderInfo.substring(0, 100) + "..." : orderInfo;
-
-  const truncatedDescription =
-    description.length > 400
-      ? description.substring(0, 400) + "..."
-      : description;
+  const truncate = (value: string, maxLength: number) => {
+    return value.length > maxLength
+      ? `${value.substring(0, maxLength)}...`
+      : value;
+  };
 
   return (
     <section id="order-section">
       <h2 id="order-info" className="text-primary">
-        {truncatedOrderInfo}
+        {truncate(orderInfo, 100)}
       </h2>
       <div id="order-details">
         <p id="order-description" className="text-primary">
-          {truncatedDescription}
+          {truncate(description, 400)}
         </p>
         <hr />
-        <p id="product-name" className="text-primary">
-          {product.name}
-        </p>
-        <p id="product-category">{product.category}</p>
+        <p className="product-name text-primary">{product.name}</p>
+        <p className="product-category">{product.category}</p>
         <hr />
-        <p id="product-price" className="text-primary">
+        <p id="order-price" className="text-primary">
           {t("total")} 299.99 UAH
         </p>
       </div>

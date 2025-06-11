@@ -1,11 +1,11 @@
-import InputField from "./InputField.tsx";
-import PayButton from "./PayButton";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { unformat } from "@react-input/mask";
-import "./CardForm.css";
 import { toast, ToastContainer } from "react-toastify";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import InputField from "./InputField.tsx";
+import PayButton from "./PayButton";
+import "./CardForm.css";
 
 type CardFormInputs = {
   cardNumber: string;
@@ -17,21 +17,23 @@ type ValidateFunction = (value: string) => string | boolean;
 
 function CardForm() {
   const [isProcessing, setIsProcessing] = useState(false);
-  const expirationRef = useRef<HTMLInputElement>(null);
+  const expirationDateRef = useRef<HTMLInputElement>(null);
   const cvcRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    setValue,
+    reset,
+    formState: { errors },
   } = useForm<CardFormInputs>({
     defaultValues: {
       cardNumber: "",
       expirationDate: "",
       cvc: "",
     },
-    mode: "onTouched",
+    mode: "onBlur",
   });
 
   const cardNumberMask = {
@@ -49,12 +51,16 @@ function CardForm() {
 
   const onSubmit: SubmitHandler<CardFormInputs> = async (data) => {
     setIsProcessing(true);
+
     const cardNumber = unformat(data.cardNumber, cardNumberMask);
     const expirationDate = unformat(data.expirationDate, expirationDateMask);
     const cvc = unformat(data.cvc, cvcMask);
     console.log(cardNumber, expirationDate, cvc);
+
     await new Promise((resolve) => setTimeout(resolve, 3000));
     toast.success(t("payment_successful"));
+
+    reset();
     setIsProcessing(false);
   };
 
@@ -79,13 +85,28 @@ function CardForm() {
   };
 
   const validateCardNumber: ValidateFunction = (value) => {
-    const cleanedValue = unformat(value, cardNumberMask);
-    return cleanedValue.length === 16 || t("card_number_length");
+    const unformatted = unformat(value, cardNumberMask);
+    return unformatted.length === 16 || t("card_number_length");
   };
 
   const validateCVC: ValidateFunction = (value) => {
-    const cleanedValue = unformat(value, cvcMask);
-    return cleanedValue.length === 3 || t("cvc_length");
+    return value.length === 3 || t("cvc_length");
+  };
+
+  const handleCardNumberChange = (value: string) => {
+    const unformatted = unformat(value, cardNumberMask);
+    if (unformatted.length === 16) {
+      expirationDateRef.current?.focus();
+    }
+  };
+
+  const handleExpirationDateChange = (value: string) => {
+    if (value.length === 5) {
+      cvcRef.current?.focus();
+    }
+    if (/^[2-9]$/.test(value)) {
+      setValue("expirationDate", "0" + value);
+    }
   };
 
   return (
@@ -109,10 +130,7 @@ function CardForm() {
               {...cardNumberMask}
               onChange={(e) => {
                 field.onChange(e);
-                const raw = unformat(e.target.value, cardNumberMask);
-                if (raw.length === 16) {
-                  expirationRef.current?.focus();
-                }
+                handleCardNumberChange(e.target.value);
               }}
             />
           )}
@@ -128,18 +146,15 @@ function CardForm() {
             <InputField
               {...field}
               type="text"
-              ref={expirationRef}
+              ref={expirationDateRef}
               label={t("expiration_date")}
-              placeholder={t("date_placeholder")}
+              placeholder={t("expiration_date_placeholder")}
               autoComplete="cc-exp"
               error={errors.expirationDate?.message}
               {...expirationDateMask}
               onChange={(e) => {
                 field.onChange(e);
-                const value = e.target.value;
-                if (value.length === 5) {
-                  cvcRef.current?.focus();
-                }
+                handleExpirationDateChange(e.target.value);
               }}
             />
           )}
@@ -158,22 +173,17 @@ function CardForm() {
               ref={cvcRef}
               label="CVC"
               placeholder="•••"
-              withIcon
+              tooltip={t("cvc_tooltip")}
               error={errors.cvc?.message}
               {...cvcMask}
             />
           )}
         />
       </div>
-
-      <PayButton
-        isProcessing={isProcessing}
-        disabled={!isValid || isProcessing}
-      />
+      <PayButton isProcessing={isProcessing} />
       <ToastContainer
         position="top-center"
         hideProgressBar={true}
-        newestOnTop={true}
         autoClose={5000}
       />
     </form>

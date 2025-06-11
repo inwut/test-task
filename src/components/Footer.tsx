@@ -1,6 +1,6 @@
-import "./Footer.css";
-import solidLogo from "../assets/solidLogo.svg";
 import { useTranslation } from "react-i18next";
+import solidLogo from "../assets/solidLogo.svg";
+import "./Footer.css";
 
 function Footer() {
   const { t } = useTranslation();

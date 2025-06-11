@@ -4,7 +4,7 @@
     height: 48px;
     border-radius: 6px;
     background-color: hsl(144, 97%, 27%);
-    color: white;
+    color: #FFFFFF;
     font-size: 16px;
     font-weight: 600;
     overflow: hidden;
@@ -57,7 +57,7 @@
     transform: translate(-50%, -50%);
 }
 
-#spinner {
+#loader {
     animation: spin 1s linear infinite;
 }
 

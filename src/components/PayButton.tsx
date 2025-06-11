@@ -1,21 +1,19 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import loader from "../assets/loader.svg";
 import "./PayButton.css";
-import { useTranslation } from "react-i18next";
 
 type PayButtonProps = {
   isProcessing: boolean;
-  disabled: boolean;
 };
 
-function PayButton({ isProcessing, disabled }: PayButtonProps) {
+function PayButton({ isProcessing }: PayButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
   const { t } = useTranslation();
 
   const handleMouseDown = () => setIsPressed(true);
-  const handleMouseUp = () => {
-    setIsPressed(false);
-  };
+
+  const handleMouseUp = () => setIsPressed(false);
 
   return (
     <button
@@ -24,7 +22,7 @@ function PayButton({ isProcessing, disabled }: PayButtonProps) {
       className={`
         ${isPressed ? "pressed" : ""} 
         ${isProcessing ? "processing" : ""}`}
-      disabled={disabled}
+      disabled={isProcessing}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onTouchStart={handleMouseDown}
@@ -34,7 +32,7 @@ function PayButton({ isProcessing, disabled }: PayButtonProps) {
         {t("pay")} 299.99 UAH
       </span>
       <span id="processing-text" className={`${isProcessing ? "visible" : ""}`}>
-        <img src={loader} id="spinner" alt={t("loader_alt")}></img>
+        <img src={loader} id="loader" alt={t("loader_alt")}></img>
         {t("processing")}
       </span>
     </button>

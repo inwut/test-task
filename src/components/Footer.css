@@ -7,10 +7,6 @@ footer {
 }
 
 footer p {
-    font-weight: 500;
     font-size: 14px;
-}
-
-footer p span {
-    font-weight: 700;
+    font-weight: 500;
 }
