@@ -1,7 +1,7 @@
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { unformat } from "@react-input/mask";
 import { toast, ToastContainer } from "react-toastify";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import InputField from "./InputField.tsx";
 import PayButton from "./PayButton";
@@ -19,13 +19,14 @@ function CardForm() {
   const [isProcessing, setIsProcessing] = useState(false);
   const expirationDateRef = useRef<HTMLInputElement>(null);
   const cvcRef = useRef<HTMLInputElement>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const {
     control,
     handleSubmit,
     setValue,
     reset,
+    trigger,
     formState: { errors },
   } = useForm<CardFormInputs>({
     defaultValues: {
@@ -48,6 +49,13 @@ function CardForm() {
     mask: "___",
     replacement: { _: /\d/ },
   };
+
+  useEffect(() => {
+    const validateForm = async () => {
+      await trigger();
+    };
+    validateForm();
+  }, [i18n.language, trigger]);
 
   const onSubmit: SubmitHandler<CardFormInputs> = async (data) => {
     setIsProcessing(true);
