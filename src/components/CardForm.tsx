@@ -51,11 +51,14 @@ function CardForm() {
   };
 
   useEffect(() => {
-    const validateForm = async () => {
-      await trigger();
+    const revalidateForm = async () => {
+      const errorNames = Object.keys(errors);
+      if (errorNames.length > 0) {
+        await trigger(errorNames as (keyof CardFormInputs)[]);
+      }
     };
-    validateForm();
-  }, [i18n.language, trigger]);
+    revalidateForm();
+  }, [i18n.language, trigger, errors]);
 
   const onSubmit: SubmitHandler<CardFormInputs> = async (data) => {
     setIsProcessing(true);
